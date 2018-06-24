@@ -4,10 +4,12 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Process the command line arguments
         CommandLineProcessor cmdProcessor = new CommandLineProcessor();
         cmdProcessor.buildOptions();
         cmdProcessor.parseOptions(args);
         cmdProcessor.validateOptions();
+
 
         // Test
         System.out.println(cmdProcessor.getOptionPrecision());
