@@ -12,6 +12,7 @@ class SeriesMember {
         this.nominator = new BigDecimal(computeNominator(memberNumber));
         this.denominator = new BigDecimal(computeDenominator(memberNumber));
     }
+    
     /**
      * Compute the nominator of the series of Ramanujan.
      *
