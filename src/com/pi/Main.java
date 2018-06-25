@@ -17,10 +17,11 @@ public class Main {
         boolean quietMode = cmdProcessor.getOptionQuiet() != null;
         Logger logger = new Logger(quietMode);
 
+        // Set precision and threads values
         int precision = Integer.parseInt(cmdProcessor.getOptionPrecision());
         int threads = Integer.parseInt(cmdProcessor.getOptionThreads());
 
-        // if more threads than tasks
+        // If more threads than tasks
         if (precision < threads) {
             threads = precision;
         }
@@ -43,23 +44,26 @@ public class Main {
         long startTime = Calendar.getInstance().getTimeInMillis();
 
         int lastTo = 0;
-        for (int n = 0; n < threads; n++) {
-            int threadsLeft = threads - (n + 1);
+        for (int threadId = 0; threadId < threads; threadId++) {
+
+            int threadsLeft = threads - (threadId + 1);
             int sumFrom = lastTo;
             int sumTo = sumFrom + chunkSize;
             lastTo = sumTo;
-            if (threadsLeft == 0)
+            if (threadsLeft == 0) {
                 sumTo = precision;
+            }
 
             // Create Thread Task to sum(from,to)
-            Runnable runnableTask = new RunnableThread(n, sumFrom, sumTo, logger);
+
+            Runnable runnableTask = new RunnableThread(threadId, sumFrom, sumTo, logger);
 
             // Save a ref to the thread and start it
             Thread currentThread = new Thread(runnableTask);
-            threadPool[n] = currentThread;
+            threadPool[threadId] = currentThread;
             currentThread.start();
         }
-        long endTime = Calendar.getInstance().getTimeInMillis();
+
         // Join all the threads and add up the calculation from each one after it finishes
         for (int i = 0; i < threads; i++) {
             try {
@@ -68,11 +72,14 @@ public class Main {
                 ex.printStackTrace();
             }
         }
-        BigDecimal result = Results.getResult();
 
+        BigDecimal result = Results.getFinalResult();
 
+        long endTime = Calendar.getInstance().getTimeInMillis();
 
-        logger.programEndedMessage(result, endTime - startTime);
+        logger.programEndedMessage(result);
+        long totalExecutionTime = endTime - startTime;
+        logger.programExecutionTimeMessage(totalExecutionTime);
 
     }
 }

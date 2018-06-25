@@ -75,12 +75,22 @@ class Logger {
      * Sends a message that the program ended
      *
      * @param result BigDecimal result for Pi
+     */
+    void programEndedMessage(BigDecimal result) {
+        String message = "Result: " +
+                result.toString() +
+                System.getProperty("line.separator");
+
+        sendMessage(message);
+    }
+
+    /**
+     * Send information for program execution time
+     *
      * @param totalExecutionTime long the thread execution time
      */
-    void programEndedMessage(BigDecimal result, long totalExecutionTime) {
-        String message = "Result: " + result.toString() +
-                System.getProperty("line.separator") +
-                "Total Execution time(millis): " +
+    void programExecutionTimeMessage(long totalExecutionTime) {
+        String message = "Total Execution time(millis): " +
                 totalExecutionTime +
                 System.getProperty("line.separator");
 

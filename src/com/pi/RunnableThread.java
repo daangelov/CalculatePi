@@ -48,6 +48,7 @@ public class RunnableThread implements Runnable {
         } finally {
             final long endTime = Calendar.getInstance().getTimeInMillis();
             final long executionTime = endTime - startTime;
+
             logger.threadEndedMessage(Integer.toString(this.threadId));
             logger.threadExecutionTimeMessage(Integer.toString(this.threadId), executionTime);
         }
