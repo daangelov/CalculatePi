@@ -1,8 +1,8 @@
-package com.pi;
+package com.pi.utils;
 
 import java.math.BigInteger;
 
-class MathFunctions {
+public class MathFunctions {
 
     /**
      * Calculate the power bitwise
@@ -12,7 +12,7 @@ class MathFunctions {
      * @param exponent BigInteger
      * @return BigInteger result
      */
-    static BigInteger power(BigInteger base, BigInteger exponent) {
+    public static BigInteger power(BigInteger base, BigInteger exponent) {
 
         BigInteger result = BigInteger.ONE;
 
@@ -38,7 +38,7 @@ class MathFunctions {
      * @param n BigInteger
      * @return BigInteger result
      */
-    static BigInteger factorial(BigInteger n) {
+    public static BigInteger factorial(BigInteger n) {
         BigInteger result = BigInteger.ONE;
 
         while (!n.equals(BigInteger.ZERO)) {

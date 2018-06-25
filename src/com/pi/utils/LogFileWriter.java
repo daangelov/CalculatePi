@@ -1,10 +1,10 @@
-package com.pi;
+package com.pi.utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class LogFileWriter {
+public class LogFileWriter {
 
     /**
      * This method saves the log in fileName
@@ -13,7 +13,7 @@ class LogFileWriter {
      * @param fileName File the file to be written in
      * @throws IOException Throws exception on error
      */
-    static void saveLogInFile(StringBuffer log, File fileName) throws IOException {
+    public static void saveLogInFile(StringBuffer log, File fileName) throws IOException {
 
         if (!fileName.exists()) {
             if (!fileName.createNewFile()) {
