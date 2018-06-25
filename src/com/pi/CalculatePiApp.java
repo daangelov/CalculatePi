@@ -69,9 +69,6 @@ class CalculatePiApp {
         long totalExecutionTime = endTime - startTime;
         logger.programEndedMessage(result, totalExecutionTime);
 
-
-        System.out.println("---------------------------------------------------------------------");
-        System.out.println(logger.getLog());
         // Save log to file
         File outputFile = (outputFileName == null) ? new File(Constants.DEFAULT_OUTPUT_FILE) : new File(outputFileName);
         try {
