@@ -12,60 +12,67 @@ class CalculatePiApp {
     private boolean isQuiet;
     private String outputFileName;
 
+
+    private Logger logger;
+    private Thread threadPool[];
+    private int chunkSize;
+
     CalculatePiApp(int precision, int threads, boolean isQuiet, String outputFileName) {
         this.precision = precision;
         this.threads = threads;
         this.isQuiet = isQuiet;
         this.outputFileName = outputFileName;
+
+        initiate();
+    }
+
+    private void initiate() {
+        this.logger = new Logger(this.isQuiet);
+        this.threadPool = new Thread[this.threads];
+        this.chunkSize = this.precision / this.threads;
     }
 
     void run() {
-        // Set mode of program (quiet/non quiet)
-        Logger logger = new Logger(isQuiet);
-
-        // Create thread pool and results pool
-        Thread threadPool[] = new Thread[threads];
-
-        // Division of tasks between threads
-        int chunkSize = precision / threads;
 
         // Measure Program Start Time
         long startTime = Calendar.getInstance().getTimeInMillis();
 
+        // Start the threads
         int lastTo = 0;
-        for (int threadId = 0; threadId < threads; threadId++) {
+        for (int threadId = 0; threadId < this.threads; threadId++) {
 
-            int threadsLeft = threads - (threadId + 1);
+            int threadsLeft = this.threads - (threadId + 1);
             int from = lastTo;
-            int to = from + chunkSize;
+            int to = from + this.chunkSize;
             lastTo = to;
 
             if (threadsLeft == 0) {
-                to = precision;
+                to = this.precision;
             }
 
             // Create thread to sum from, to
-            Runnable runnableThread = new RunnableThread(threadId, from, to, logger);
+            Runnable runnableThread = new RunnableThread(threadId, from, to, this.logger);
 
             // Save a ref to the thread and start it
             Thread currentThread = new Thread(runnableThread);
-            threadPool[threadId] = currentThread;
+            this.threadPool[threadId] = currentThread;
             currentThread.start();
         }
 
         // Join all the threads and add up the calculation from each one after it finishes
-        for (int i = 0; i < threads; i++) {
+        for (int i = 0; i < this.threads; i++) {
             try {
-                threadPool[i].join();
+                this.threadPool[i].join();
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
         }
 
+        // Get result from static class result
         BigDecimal result = Results.getFinalResult();
 
+        // Measure Program End Time
         long endTime = Calendar.getInstance().getTimeInMillis();
-
         long totalExecutionTime = endTime - startTime;
         logger.programEndedMessage(result, totalExecutionTime);
 

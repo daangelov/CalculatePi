@@ -1,6 +1,7 @@
 package com.pi;
 
 import java.math.BigDecimal;
+import java.util.concurrent.locks.ReentrantLock;
 
 class Logger {
 
@@ -72,8 +73,7 @@ class Logger {
                 .append(result)
                 .append(System.getProperty("line.separator"))
                 .append("Total Execution time(millis): ")
-                .append(totalExecutionTime)
-                .append(System.getProperty("line.separator"));
+                .append(totalExecutionTime);
 
         sendMessage(message);
     }
@@ -86,10 +86,11 @@ class Logger {
     void fileSavedMessage(String fileName) {
         StringBuffer message = new StringBuffer()
                 .append(System.getProperty("line.separator"))
+                .append(System.getProperty("line.separator"))
                 .append("Saved Results to File: ")
                 .append(fileName)
                 .append(System.getProperty("line.separator"));
-        
+
         sendMessage(message);
     }
 
@@ -100,7 +101,15 @@ class Logger {
      */
     private void sendMessage(StringBuffer message) {
 
-        this.log.append(message);
-        System.out.print(message);
+
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try {
+            this.log.append(message);
+            System.out.print(message);
+        } finally {
+            lock.unlock();
+        }
     }
+
 }
