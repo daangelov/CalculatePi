@@ -9,11 +9,11 @@ class LogFileWriter {
     /**
      * This method saves the log in fileName
      *
-     * @param log      String the logged information
+     * @param log      StringBuffer the logged information
      * @param fileName File the file to be written in
      * @throws IOException Throws exception on error
      */
-    static void saveLogInFile(String log, File fileName) throws IOException {
+    static void saveLogInFile(StringBuffer log, File fileName) throws IOException {
 
         if (!fileName.exists()) {
             if (!fileName.createNewFile()) {

@@ -38,7 +38,7 @@ public class RunnableThread implements Runnable {
 
     @Override
     public void run() {
-        logger.threadStartedMessage(Integer.toString(this.threadId));
+        logger.threadStartedMessage(this.threadId);
         final long startTime = Calendar.getInstance().getTimeInMillis();
 
         try {
@@ -49,8 +49,7 @@ public class RunnableThread implements Runnable {
             final long endTime = Calendar.getInstance().getTimeInMillis();
             final long executionTime = endTime - startTime;
 
-            logger.threadEndedMessage(Integer.toString(this.threadId));
-            logger.threadExecutionTimeMessage(Integer.toString(this.threadId), executionTime);
+            logger.threadEndedMessage(this.threadId, executionTime);
         }
     }
 }
