@@ -46,9 +46,9 @@ class ThreadPool {
 
     void joinThreads() {
 
-        for (int i = 0; i < this.threads; i++) {
+        for (int threadId = 0; threadId < this.threads; threadId++) {
             try {
-                this.threadPool[i].join();
+                this.threadPool[threadId].join();
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
