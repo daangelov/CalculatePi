@@ -77,7 +77,7 @@ class CalculatePiApp {
         logger.programEndedMessage(result, totalExecutionTime);
 
         // Save log to file
-        File outputFile = (outputFileName == null) ? new File(Constants.DEFAULT_OUTPUT_FILE) : new File(outputFileName);
+        File outputFile = new File(outputFileName);
         try {
             LogFileWriter.saveLogInFile(logger.getLog(), outputFile);
         } catch (IOException e) {

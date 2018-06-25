@@ -119,11 +119,16 @@ class CommandLineProcessor {
     }
 
     boolean getOptionQuiet() {
-        return this.cmd.getOptionValue("q") != null;
+        return this.cmd.hasOption("q");
     }
 
     String getOptionOutput() {
-        return this.cmd.getOptionValue("o");
+        String outputFileName = this.cmd.getOptionValue("o");
+
+        if (outputFileName == null) {
+            return Constants.DEFAULT_OUTPUT_FILE;
+        }
+        return outputFileName;
     }
 
     /**
