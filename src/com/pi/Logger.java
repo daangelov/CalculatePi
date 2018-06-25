@@ -11,7 +11,7 @@ class Logger {
         this.isQuiet = isQuiet;
     }
 
-    public String getLog() {
+    String getLog() {
         return log;
     }
 
@@ -77,7 +77,8 @@ class Logger {
      * @param result BigDecimal result for Pi
      */
     void programEndedMessage(BigDecimal result) {
-        String message = "Result: " +
+        String message = System.getProperty("line.separator") +
+                "Result: " +
                 result.toString() +
                 System.getProperty("line.separator");
 
@@ -100,10 +101,15 @@ class Logger {
     /**
      * Sends a message that a file was saved
      *
-     * @param filePath String
+     * @param fileName String
      */
-    public void fileSavedMessage(String filePath) {
-        System.out.println("Saved Results to File: " + filePath);
+    void fileSavedMessage(String fileName) {
+        String message = System.getProperty("line.separator") +
+                "Saved Results to File: " +
+                fileName +
+                System.getProperty("line.separator");
+
+        sendMessage(message);
     }
 
     /**
@@ -113,7 +119,7 @@ class Logger {
      */
     private void sendMessage(String message) {
 
-        this.log += message;
+        this.log = (this.log == null) ? message : this.log + message;
         System.out.print(message);
     }
 }

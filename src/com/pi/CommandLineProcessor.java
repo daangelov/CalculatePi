@@ -94,18 +94,32 @@ class CommandLineProcessor {
 
     /**
      * Get the value of option precision
+     *
      * @return string value
      */
-    String getOptionPrecision() {
-        return this.cmd.getOptionValue("p");
+    int getOptionPrecision() {
+        int precision = Integer.parseInt(this.cmd.getOptionValue("p"));
+        if (precision <= 0) {
+            return 1;
+        }
+        return precision;
     }
 
-    String getOptionThreads() {
-        return this.cmd.getOptionValue("t");
+    int getOptionThreads() {
+        int precision = Integer.parseInt(this.cmd.getOptionValue("p"));
+        int threads = Integer.parseInt(this.cmd.getOptionValue("t"));
+
+        if (precision < threads) {
+            return precision;
+        }
+        if (threads <= 0) {
+            return 1;
+        }
+        return threads;
     }
 
-    String getOptionQuiet() {
-        return this.cmd.getOptionValue("q");
+    boolean getOptionQuiet() {
+        return this.cmd.getOptionValue("q") != null;
     }
 
     String getOptionOutput() {
@@ -125,6 +139,6 @@ class CommandLineProcessor {
     private void printHelp() {
 
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("CalculatePi", this.options,true);
+        formatter.printHelp("CalculatePi", this.options, true);
     }
 }
