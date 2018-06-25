@@ -30,7 +30,7 @@ class CommandLineProcessor {
 
         Option output = Option.builder("o")
                 .argName("output")
-                .desc("Indicates where the calculation will be output")
+                .desc("Indicates where the calculation will be output.")
                 .hasArg()
                 .build();
 
@@ -38,7 +38,7 @@ class CommandLineProcessor {
                 .argName("quiet")
                 .hasArg()
                 .optionalArg(true)
-                .desc("Run program in \"quiet\" mode")
+                .desc("Run program in quiet mode.")
                 .build();
 
         this.options.addOption(precision);
