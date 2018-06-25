@@ -8,13 +8,11 @@ public class RunnableThread implements Runnable {
     private int threadId;
     private int from;
     private int to;
-    private Logger logger;
 
-    RunnableThread(int threadId, int from, int to, Logger logger) {
+    RunnableThread(int threadId, int from, int to) {
         this.threadId = threadId;
         this.from = from;
         this.to = to;
-        this.logger = logger;
     }
 
     /**
@@ -38,7 +36,7 @@ public class RunnableThread implements Runnable {
 
     @Override
     public void run() {
-        logger.threadStartedMessage(this.threadId);
+        Logger.threadStartedMessage(this.threadId);
         final long startTime = Calendar.getInstance().getTimeInMillis();
 
         try {
@@ -49,7 +47,7 @@ public class RunnableThread implements Runnable {
             final long endTime = Calendar.getInstance().getTimeInMillis();
             final long executionTime = endTime - startTime;
 
-            logger.threadEndedMessage(this.threadId, executionTime);
+            Logger.threadEndedMessage(this.threadId, executionTime);
         }
     }
 }

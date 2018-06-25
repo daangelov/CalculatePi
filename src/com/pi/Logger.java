@@ -5,15 +5,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 class Logger {
 
-    private StringBuffer log;
-    private boolean isQuiet;
+    private static StringBuffer log = new StringBuffer();
+    private static boolean isQuiet;
 
-    Logger(boolean isQuiet) {
-        log = new StringBuffer();
-        this.isQuiet = isQuiet;
+    static void setIsQuiet(boolean isQuiet) {
+        Logger.isQuiet = isQuiet;
     }
 
-    StringBuffer getLog() {
+    static StringBuffer getLog() {
         return log;
     }
 
@@ -22,8 +21,8 @@ class Logger {
      *
      * @param threadId String id of thread
      */
-    void threadStartedMessage(int threadId) {
-        if (this.isQuiet) {
+    static void threadStartedMessage(int threadId) {
+        if (Logger.isQuiet) {
             return;
         }
         StringBuffer message = new StringBuffer()
@@ -41,8 +40,8 @@ class Logger {
      * @param threadId            String id of thread
      * @param threadExecutionTime long the thread execution time
      */
-    void threadEndedMessage(int threadId, long threadExecutionTime) {
-        if (this.isQuiet) {
+    static void threadEndedMessage(int threadId, long threadExecutionTime) {
+        if (Logger.isQuiet) {
             return;
         }
         StringBuffer message = new StringBuffer()
@@ -66,7 +65,7 @@ class Logger {
      * @param result             BigDecimal result for Pi
      * @param totalExecutionTime long the thread execution time
      */
-    void programEndedMessage(BigDecimal result, long totalExecutionTime) {
+    static void programEndedMessage(BigDecimal result, long totalExecutionTime) {
         StringBuffer message = new StringBuffer()
                 .append(System.getProperty("line.separator"))
                 .append("Result: ")
@@ -83,7 +82,7 @@ class Logger {
      *
      * @param fileName String
      */
-    void fileSavedMessage(String fileName) {
+    static void fileSavedMessage(String fileName) {
         StringBuffer message = new StringBuffer()
                 .append(System.getProperty("line.separator"))
                 .append(System.getProperty("line.separator"))
@@ -99,17 +98,15 @@ class Logger {
      *
      * @param message StringBuffer
      */
-    private void sendMessage(StringBuffer message) {
-
+    private static void sendMessage(StringBuffer message) {
 
         ReentrantLock lock = new ReentrantLock();
         lock.lock();
         try {
-            this.log.append(message);
+            Logger.log.append(message);
             System.out.print(message);
         } finally {
             lock.unlock();
         }
     }
-
 }
